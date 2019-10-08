@@ -120,7 +120,7 @@ public class DAO {
                         ResultSet rs = stmt.executeQuery();
 			rs.next(); 
 			
-			result = rs.getInt("");
+			//result = rs.getInt("");
 
 		} catch (SQLException ex) {
 			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
