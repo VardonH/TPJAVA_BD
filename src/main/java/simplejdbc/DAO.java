@@ -80,7 +80,26 @@ public class DAO {
 	 * @throws DAOException
 	 */
 	public int numberOfOrdersForCustomer(int customerId) throws DAOException {
-		throw new UnsupportedOperationException("Pas encore implémenté");
+		int result = 0;
+
+		String sql = "SELECT COUNT(*) AS NORDERS FROM PURCHASE_ORDER WHERE CUSTOMER_ID = ?";
+		// Syntaxe "try with resources" 
+		// cf. https://stackoverflow.com/questions/22671697/try-try-with-resources-and-connection-statement-and-resultset-closing
+		try (Connection connection = myDataSource.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql)) {
+			// Définir la valeur du paramètre
+			stmt.setInt(1, customerId);
+                        ResultSet rs = stmt.executeQuery();
+			rs.next(); 
+			
+			result = rs.getInt("NORDERS");
+
+		} catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+		}
+
+		return result;
 	}
 
 	/**
@@ -91,7 +110,26 @@ public class DAO {
 	 * @throws DAOException
 	 */
 	CustomerEntity findCustomer(int customerID) throws DAOException {
-		throw new UnsupportedOperationException("Pas encore implémenté");
+            
+            String sql = "SELECT * FROM CUSTOMER WHERE CUSTOMER_ID = ?";
+	
+            try (Connection connection = myDataSource.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql)) {
+			// Définir la valeur du paramètre
+			stmt.setInt(1, customerID);
+                        ResultSet rs = stmt.executeQuery();
+			rs.next(); 
+			
+			result = rs.getInt("");
+
+		} catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+		}
+            
+            //CustomerEntity customerEnt = new CustomerEntity(customerID,);
+            //return ;
+            throw new UnsupportedOperationException("Pas encore implémenté");
 	}
 
 	/**
